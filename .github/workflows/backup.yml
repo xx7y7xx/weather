@@ -51,6 +51,7 @@ jobs:
 
       - name: Save credentials to file
         run: |
+          npm i
           ./run.sh
           echo "${{ secrets.CREDENTIALS }}" > credentials.json
           node upload.js
