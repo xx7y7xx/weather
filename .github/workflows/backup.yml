@@ -33,6 +33,8 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
+      # https://github.com/mathisve/gdrive-upload-action/blob/main/main.go
+
       # - name: Upload to gdrive
       #   uses: team-tumbleweed/gdrive-upload-action@main
       #   with:
