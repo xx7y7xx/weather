@@ -21,7 +21,7 @@ jobs:
       - name: Generate file with timestamp
         run: |
           timestamp=$(date +"%s")
-          file_name="${timestamp}.txt"
+          file_name="a.txt"
           echo "Timestamp: $timestamp" > $file_name
 
       # - name: Archive files
@@ -45,7 +45,7 @@ jobs:
       - name: Upload to gdrive
         uses: team-tumbleweed/gdrive-upload-action@main
         with:
-          filename: "*.txt"
-          name: "${{ steps.date.outputs.date }}.txt"
+          filename: "a.txt"
+          name: "a.txt"
           folderId: ${{ secrets.folderId }}
           credentials: ${{ secrets.credentials }}
