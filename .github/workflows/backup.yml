@@ -1,0 +1,51 @@
+name: Backup
+
+concurrency:
+  group: ${{ github.ref }}
+
+on:
+  workflow_dispatch:
+  schedule:
+    # - cron: "0 8 * * 5" # every friday AM 8:00
+    - cron: "* * * * *" # every friday AM 8:00
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate file with timestamp
+        run: |
+          timestamp=$(date +"%s")
+          file_name="${timestamp}.txt"
+          echo "Timestamp: $timestamp" > $file_name
+
+      # - name: Archive files
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install zip
+      #     zip -r archive.zip *
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      # - name: Upload to gdrive
+      #   uses: team-tumbleweed/gdrive-upload-action@main
+      #   with:
+      #     filename: "archive.zip"
+      #     name: "backup-${{ steps.date.outputs.date }}.zip"
+      #     folderId: ${{ secrets.folderId }}
+      #     credentials: ${{ secrets.credentials }}
+
+      - name: Upload to gdrive
+        uses: team-tumbleweed/gdrive-upload-action@main
+        with:
+          filename: "*.txt"
+          name: "${{ steps.date.outputs.date }}.txt"
+          folderId: ${{ secrets.folderId }}
+          credentials: ${{ secrets.credentials }}
