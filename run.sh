@@ -28,7 +28,7 @@ for file in new_radar_frame_*.png; do
   # Crop the image using the specified coordinates and dimensions
   convert "${file}" -crop 120x19+838+728 "cropped_${file}"
 
-  timestamp=$(tesseract "cropped_${file}" stdout -c tessedit_char_whitelist='0123456789-: ' --psm 6 | tr -d '[:space:]')
+  timestamp=$(tesseract "cropped_${file}" stdout -c tessedit_char_whitelist='0123456789-: ' -c dpi=150 --psm 6 | tr -d '[:space:]')
   if [ ! -z "$timestamp" ]; then
     # timestamp="2023-07-1421:35:00"
     # formatted_timestamp="2023-07-14 21:35:00"
