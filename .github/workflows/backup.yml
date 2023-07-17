@@ -23,6 +23,7 @@ jobs:
           timestamp=$(date +"%s")
           file_name="a.txt"
           echo "Timestamp: $timestamp" > $file_name
+          echo "backup-${{ secrets.folderId2 }}.zip"
 
       # - name: Archive files
       #   run: |
