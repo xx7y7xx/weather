@@ -1,13 +1,10 @@
 name: Backup
 
-concurrency:
-  group: ${{ github.ref }}
-
 on:
   workflow_dispatch:
-  schedule:
-    # - cron: "0 8 * * 5" # every friday AM 8:00
-    - cron: "* * * * *" # every friday AM 8:00
+  # schedule:
+  #   # - cron: "0 8 * * 5" # every friday AM 8:00
+  #   - cron: "* * * * *" # every friday AM 8:00
 
 jobs:
   my_job:
@@ -21,7 +18,7 @@ jobs:
       - name: Generate file with timestamp
         run: |
           timestamp=$(date +"%s")
-          file_name="a.txt"
+          file_name="${timestamp}.txt"
           echo "Timestamp: $timestamp" > $file_name
           echo "backup-${{ secrets.folderid2 }}.zip"
           echo "backup-${{ secrets.FOLDERID2 }}.zip"
@@ -44,10 +41,18 @@ jobs:
       #     folderId: ${{ secrets.folderId }}
       #     credentials: ${{ secrets.credentials }}
 
-      - name: Upload to gdrive
-        uses: team-tumbleweed/gdrive-upload-action@main
-        with:
-          filename: "a.txt"
-          name: "a.txt"
-          folderId: ${{ secrets.folderId }}
-          credentials: ${{ secrets.credentials }}
+      # - name: Upload to gdrive
+      #   uses: team-tumbleweed/gdrive-upload-action@main
+      #   with:
+      #     filename: "a.txt"
+      #     name: "a.txt"
+      #     folderId: ${{ secrets.folderId }}
+      #     credentials: ${{ secrets.credentials }}
+
+      - name: Save credentials to file
+        run: |
+          ./run.sh
+          echo "${{ secrets.CREDENTIALS }}" > credentials.json
+          node upload.js
+        env:
+          FOLDERID: ${{ secrets.FOLDERID }}
