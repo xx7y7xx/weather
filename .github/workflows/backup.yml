@@ -18,8 +18,6 @@ jobs:
         run: |
           ./install.sh
           ./split.sh
-          ls -l
-          node print.js
           node upload.js
         env:
           CREDENTIALS: ${{ secrets.CREDENTIALS }}
