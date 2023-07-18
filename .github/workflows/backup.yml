@@ -16,7 +16,6 @@ jobs:
 
       - name: Run split script
         run: |
-          npm i
           ./install.sh
           ./split.sh
           echo "${{ secrets.CREDENTIALS }}" > credentials.json
