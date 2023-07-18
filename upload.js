@@ -2,8 +2,6 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const keyFile = 'credentials.json';
 
-console.log('google.auth', google.auth);
-
 const drive = google.drive({
   version: 'v3',
   auth: new google.auth.JWT({
