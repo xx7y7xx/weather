@@ -55,6 +55,7 @@ jobs:
       - name: Save credentials to file
         run: |
           npm i
+          ./install.sh
           ./run.sh
           echo "${{ secrets.CREDENTIALS }}" > credentials.json
           ls -l
