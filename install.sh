@@ -14,4 +14,4 @@ tesseract --version
 
 npm i
 
-cat /home/runner/work/weather/weather/node_modules/googleapis/node_modules/gtoken/build/src/index.js
+# cat /home/runner/work/weather/weather/node_modules/googleapis/node_modules/gtoken/build/src/index.js
