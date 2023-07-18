@@ -2,6 +2,8 @@
 
 uname -a
 
+echo $CREDENTIALS > credentials.json
+
 # install tesseract v5 (without this, ubuntu only has v4)
 sudo add-apt-repository -y ppa:alex-p/tesseract-ocr5
 

@@ -18,8 +18,9 @@ jobs:
         run: |
           ./install.sh
           ./split.sh
-          echo "${{ secrets.CREDENTIALS }}" > credentials.json
           ls -l
+          node print.js
           node upload.js
         env:
+          CREDENTIALS: ${{ secrets.CREDENTIALS }}
           FOLDERID: ${{ secrets.FOLDERID }}
