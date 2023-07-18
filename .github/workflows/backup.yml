@@ -1,14 +1,12 @@
-name: Backup
+name: Split
 
 on:
   workflow_dispatch:
   schedule:
-  #   # - cron: "0 8 * * 5" # every friday AM 8:00
-  #   - cron: "* * * * *" # every friday AM 8:00
-  - cron: "*/30 * * * *" # every 30min
+    - cron: "*/30 * * * *" # every 30min
 
 jobs:
-  my_job:
+  split_job:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,47 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Generate file with timestamp
-        run: |
-          timestamp=$(date +"%s")
-          file_name="${timestamp}.txt"
-          echo "Timestamp: $timestamp" > $file_name
-          echo "backup-${{ secrets.folderid2 }}.zip"
-          echo "backup-${{ secrets.FOLDERID2 }}.zip"
-
-      # - name: Archive files
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install zip
-      #     zip -r archive.zip *
-
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      # https://github.com/mathisve/gdrive-upload-action/blob/main/main.go
-
-      # - name: Upload to gdrive
-      #   uses: team-tumbleweed/gdrive-upload-action@main
-      #   with:
-      #     filename: "archive.zip"
-      #     name: "backup-${{ steps.date.outputs.date }}.zip"
-      #     folderId: ${{ secrets.folderId }}
-      #     credentials: ${{ secrets.credentials }}
-
-      # - name: Upload to gdrive
-      #   uses: team-tumbleweed/gdrive-upload-action@main
-      #   with:
-      #     filename: "a.txt"
-      #     name: "a.txt"
-      #     folderId: ${{ secrets.folderId }}
-      #     credentials: ${{ secrets.credentials }}
-
-      - name: Save credentials to file
+      - name: Run split script
         run: |
           npm i
           ./install.sh
-          ./run.sh
+          ./split.sh
           echo "${{ secrets.CREDENTIALS }}" > credentials.json
           ls -l
           node upload.js

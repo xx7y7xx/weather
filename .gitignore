@@ -1,2 +1,4 @@
 node_modules
 credentials.json
+new_radar*
+radar_frame_timestamp_*.png
