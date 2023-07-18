@@ -5,6 +5,7 @@ on:
   # schedule:
   #   # - cron: "0 8 * * 5" # every friday AM 8:00
   #   - cron: "* * * * *" # every friday AM 8:00
+  - cron: "*/30 * * * *" # every 30min
 
 jobs:
   my_job:
