@@ -27,9 +27,9 @@ async function uploadFile(filePath) {
       media,
       fields: 'id',
     });
-    console.log(`File ID: ${response.data.id}, File: ${filePath} - Uploaded`);
+    console.log(`[upload.js] File ID: ${response.data.id}, File: ${filePath} - Uploaded`);
   } catch (err) {
-    console.error(`Error uploading ${filePath}:`, err);
+    console.error(`[upload.js] Error uploading ${filePath}:`, err, fileMetadata);
   }
 }
 
