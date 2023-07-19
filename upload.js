@@ -11,23 +11,50 @@ const drive = google.drive({
 });
 
 async function uploadFile(filePath) {
-  const fileMetadata = {
-    'name': filePath.split('/').pop(),
-    'parents': [process.env.FOLDERID],
-  };
-  const media = {
-    mimeType: 'image/png',
-    body: fs.createReadStream(filePath),
-  };
+  const fileName = filePath.split('/').pop();
+  const folderId = process.env.FOLDERID;
+
   try {
-    const response = await drive.files.create({
-      requestBody: fileMetadata,
-      media,
-      fields: 'id',
+    // Check if the file already exists in the folder
+    let existingFileId;
+    const searchResponse = await drive.files.list({
+      q: `mimeType='image/png' and trashed = false and '${folderId}' in parents and name='${fileName}'`,
+      fields: 'nextPageToken, files(id, name)',
     });
-    console.log(`[upload.js] File ID: ${response.data.id}, File: ${filePath} - Uploaded`);
+
+    if (searchResponse.data.files.length > 0) {
+      existingFileId = searchResponse.data.files[0].id;
+    }
+
+    // Upload or replace the file
+    const fileMetadata = {
+      'name': fileName,
+      'parents': [folderId],
+    };
+    const media = {
+      mimeType: 'image/png',
+      body: fs.createReadStream(filePath),
+    };
+
+    if (existingFileId) {
+      console.log(`[upload.js] File ${fileName} already exists, replacing it.`);
+      const response = await drive.files.update({
+        fileId: existingFileId,
+        requestBody: fileMetadata,
+        media,
+        fields: 'id',
+      });
+      console.log(`[upload.js] File ID: ${response.data.id}, File: ${filePath} - Replaced`);
+    } else {
+      const response = await drive.files.create({
+        requestBody: fileMetadata,
+        media,
+        fields: 'id',
+      });
+      console.log(`[upload.js] File ID: ${response.data.id}, File: ${filePath} - Uploaded`);
+    }
   } catch (err) {
-    console.error(`[upload.js] Error uploading ${filePath}:`, err, fileMetadata);
+    console.error(`[upload.js] Error processing ${filePath}:`, err, fileMetadata);
   }
 }
 
