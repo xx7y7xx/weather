@@ -13,6 +13,10 @@ const drive = google.drive({
 async function uploadFile(filePath) {
   const fileName = filePath.split('/').pop();
   const folderId = process.env.FOLDERID;
+  const fileMetadata = {
+    'name': fileName,
+    'parents': [folderId],
+  };
 
   try {
     // Check if the file already exists in the folder
@@ -27,17 +31,13 @@ async function uploadFile(filePath) {
     }
 
     // Upload or replace the file
-    const fileMetadata = {
-      'name': fileName,
-      'parents': [folderId],
-    };
     const media = {
       mimeType: 'image/png',
       body: fs.createReadStream(filePath),
     };
 
     if (existingFileId) {
-      console.log(`[upload.js] File ${fileName} already exists, replacing it.`);
+      console.log(`File ${fileName} already exists, replacing it.`);
       const response = await drive.files.update({
         fileId: existingFileId,
         requestBody: fileMetadata,
