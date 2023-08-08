@@ -1,6 +1,6 @@
 # weather
 
-![](radar.gif)
+[![](radar-2023-07-30.gif)](radar-2023-07-30.mp4)
 
 ## Commands
 
