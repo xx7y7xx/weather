@@ -1,4 +1,4 @@
-name: Split
+name: GIF to PNG Frames Uploader
 
 on:
   workflow_dispatch:
