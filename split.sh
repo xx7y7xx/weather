@@ -18,7 +18,7 @@ ls -l
 # Extract timestamp and rename static images
 for file in new_radar_frame_*.png; do
   # Crop the image to focus on timestamp part
-  convert "${file}" -crop 120x19+838+728 "cropped_${file}"
+  convert "${file}" -crop 114x13+840+775 "cropped_${file}"
 
   # $ tesseract cropped_new_radar_frame_0.png stdout -c tessedit_char_whitelist='0123456789-: ' --dpi 70 --psm 6
   timestamp=$(tesseract "cropped_${file}" stdout -c tessedit_char_whitelist='0123456789-: ' --dpi 150 --psm 6)
