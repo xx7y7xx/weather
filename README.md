@@ -1,4 +1,6 @@
-# weather
+# weather-bkk
+
+BKK (Bangkok) weather gif archive of https://weather.tmd.go.th/bma_ncLoop.php
 
 [![](radar-2023-07-30.gif)](radar-2023-07-30.mp4)
 
