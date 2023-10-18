@@ -55,6 +55,7 @@ async function uploadFile(filePath) {
     }
   } catch (err) {
     console.error(`[upload.js] Error processing ${filePath}:`, err, fileMetadata);
+    throw err;
   }
 }
 
