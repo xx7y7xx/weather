@@ -1,5 +1,7 @@
 const fs = require('fs');
 const {google} = require('googleapis');
+const axios = require('axios');
+
 const keyFile = 'credentials.json';
 
 const drive = google.drive({
@@ -9,6 +11,21 @@ const drive = google.drive({
     scopes: ['https://www.googleapis.com/auth/drive'],
   }),
 });
+
+const sendMsg = (msg) => {
+  const url = process.env.SLACK_WEBHOOK_URL;
+  const data = {
+    text: msg
+  };
+
+  axios.post(url, data)
+    .then(response => {
+      console.log('Slack response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
 
 async function uploadFile(filePath) {
   const fileName = filePath.split('/').pop();
@@ -55,7 +72,8 @@ async function uploadFile(filePath) {
     }
   } catch (err) {
     console.error(`[upload.js] Error processing ${filePath}:`, err, fileMetadata);
-    throw err;
+    // throw err;
+    sendMsg('Failed to upload, err:', err.message);
   }
 }
 
