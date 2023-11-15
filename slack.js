@@ -13,6 +13,7 @@ const sendSlackMessage = async (message, channel = null) => {
             });
             return resolve(true);
         } catch (error) {
+            console.log('ERROR: Failed to send message!', error)
             return resolve(true);
         }
     });
