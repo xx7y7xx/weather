@@ -1,4 +1,5 @@
-name: GIF to PNG Frames Uploader
+# GIF to PNG Frames Uploader
+name: Upload frames
 
 on:
   workflow_dispatch:
